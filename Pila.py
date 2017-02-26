@@ -8,13 +8,13 @@ class Pila():
 
 	def __init__(self):
 		self.inicio=None
-		self.Dato=None
+		self.dato=None
 
 	def Vacia(self):
 		if self.inicio==None:
 			return True
 
-	def insertar(self, valor):
+	def push(self, valor):
 		nuevo=Nodo.NodoPila(valor)
 		if self.Vacia()==True:
 			nuevo.siguiente=None
@@ -28,3 +28,9 @@ class Pila():
 		while actual!= None:
 			print actual.dato
 			actual= actual.siguiente
+
+	def pop(self):
+		Dato=self.inicio.dato
+		self.inicio	= self.inicio.siguiente
+		return Dato
+

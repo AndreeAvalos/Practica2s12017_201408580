@@ -14,7 +14,7 @@ class Cola():
 		if self.raiz==None:
 			return True
 
-	def insertar(self, Dato):
+	def queue(self, Dato):
 		Actual=Nodo.NodoCola(Dato)
 
 		if self.Vacia()==True:
@@ -23,6 +23,18 @@ class Cola():
 		else:
 			self.ultimo.ultimo=Actual
 			self.ultimo=Actual
+
+	def dequeque(self):
+
+			self.dato = 0
+			self.dato = self.raiz.dato
+			if self.raiz==self.ultimo:
+				self.raiz=self.ultimo=None
+			else:
+				self.raiz=self.raiz.ultimo
+
+			return self.dato
+
 
 	def imprimir(self):
 		aux=self.raiz

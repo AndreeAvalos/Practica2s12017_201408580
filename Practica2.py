@@ -2,35 +2,46 @@ __author__ = "AndreeAvalos"
 
 #from flask import Flask
 #app = Flask("Practica2")
-print "====Esto es una Cola==="
+print "======Esto es una Cola======"
 import Cola
 import Pila
 
-pila2 = Cola
+Cola2 = Cola
 
-pila = pila2.Cola()
+cola = Cola2.Cola()
 
-pila.insertar(5)
-pila.insertar(4)
-pila.insertar(3)
-pila.insertar(2)
-pila.insertar(1)
+cola.queue(1)
+cola.queue(2)
+cola.queue(3)
+cola.queue(4)
+cola.queue(5)
 
-pila.imprimir()
-print "===Esto es una Pila==="
+cola.imprimir()
+
+print"-----------queque-----------"
+v1=cola.dequeque()
+print str(v1)
+print"----------------------------"
+cola.imprimir()
+
+print "======Esto es una Pila======"
 
 pila2 = Pila
 
 pila = pila2.Pila()
 
-pila.insertar(5)
-pila.insertar(4)
-pila.insertar(3)
-pila.insertar(2)
-pila.insertar(1)
+pila.push(1)
+pila.push(2)
+pila.push(3)
+pila.push(4)
+pila.push(5)
 
 pila.imprimir()
-
+print"-----------pop--------------"
+v1=pila.pop()
+print str(v1)
+print"----------------------------"
+pila.imprimir()
 
 #@app.route("/")
 #def hellof():
