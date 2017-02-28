@@ -2,7 +2,7 @@ __author__ = "AndreeAvalos"
 
 #from flask import Flask
 #app = Flask("Practica2")
-print "======Esto es una Cola======"
+"""print "======Esto es una Cola======"
 import Cola
 import Pila
 import ListaSimple
@@ -55,10 +55,10 @@ lista.insertar(4)
 lista.insertar(5)
 lista.insertar(6)
 lista.insertar(100)
+lista.eliminar(2)
 lista.GenerarGrafico()
 
 print"-------------------------"
-print v1
 
 
 #@app.route("/")
@@ -68,3 +68,18 @@ print v1
 
 #if __name__ == "__main__":
 # app.run()
+"""
+
+import MatrizDispersa
+
+MD1=MatrizDispersa
+MD=MD1.Matriz()
+
+MD.crear(2,3)
+
+MD.add(2,1,1)
+MD.add(3,1,2)
+MD.add(4,2,2)
+MD.add(1,2,1)
+MD.add(5,2,3)
+MD.imprimir()

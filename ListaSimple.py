@@ -2,7 +2,6 @@ __author__ = "AndreeAvalos"
 
 import NodoLista
 Lista = NodoLista
-import os
 import subprocess
 
 class ListaSimple():
@@ -45,6 +44,17 @@ class ListaSimple():
 				return "El dato se encontro en el indice: "+ str(contador)
 
 			return "Dato no encontrado"
+
+
+	def eliminar(self,posicion):
+		Actual= self.inicio
+		contador=0
+		while contador!=posicion-1:
+
+			Actual=Actual.getEnlace()
+			contador=contador+1
+
+		Actual.setEnlace(Actual.getEnlace().getEnlace())
 
 
 #Metodo al cual llamaremos para poder graficar con grapvhiz
