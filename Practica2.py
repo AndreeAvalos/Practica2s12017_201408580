@@ -2,10 +2,12 @@ import Matriz
 ma= Matriz.Matriz()
 ma.insertar("a","gmail","uno")
 ma.insertar("b","outlook","dos")
-ma.insertar("q","gmail","seis")
-ma.insertar("e","outlook","cuatro")
-ma.insertar("c","yahoo", "tres")
-ma.insertar("y","yahoo", "cinco")
-ma.insertar("r","hotmail", "siete")
+ma.insertar("z","hotmail","tres")
+ma.insertar("f","gmail","cuatro")
+ma.insertar("g","hotmail","cinco")
+ma.insertar("y","gmail","seis")
+ma.insertar("e","hotmail","siete")
+
+
 
 ma.ConstruirTXT()

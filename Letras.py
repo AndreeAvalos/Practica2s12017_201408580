@@ -30,10 +30,47 @@ class Letras(object):
 	
 	def insertarotro(self,insertar):
 		nuevo=nl.NodoLetra(insertar)
+		
+		if self.vacio()==True:
+			self.primero=nuevo
+			self.ultimo= nuevo
+			
+		else:
 
-		self.ultimo.setAbajo(nuevo)
-		nuevo.setArriba(self.ultimo)
-		self.ultimo=nuevo
+			 letraInsertar = insertar[:1]
+			 letraInsertar= ord(letraInsertar)
+
+			 agregado=False	
+			 Auxiliar= self.primero
+
+			 while Auxiliar!= None:
+			 	letracomparar = Auxiliar.getValor()[:1]
+			 	letracomparar=ord(letracomparar)
+
+			 	if letraInsertar>letracomparar:
+			 		Auxiliar=Auxiliar.getAbajo()
+			 	else:
+			 		if Auxiliar==self.primero:
+			 			nuevo.setAbajo(Auxiliar)
+			 			Auxiliar.setArriba(nuevo)
+			 			self.primero=nuevo
+			 			agregado=True
+			 			break
+			 		else:
+
+			 			nuevo.setArriba(Auxiliar.getArriba())
+			 			Auxiliar.getArriba().setAbajo(nuevo)
+
+			 			nuevo.setAbajo(Auxiliar)
+			 			Auxiliar.setArriba(nuevo)
+			 			agregado=True
+			 			break
+			 if agregado==False:
+			 	self.ultimo.setAbajo(nuevo)
+			 	nuevo.setArriba(self.ultimo)
+				self.ultimo=nuevo
+
+		self.tamano=self.tamano+1
 
 	def buscar(self,valor):
 		if self.vacio()==False:
