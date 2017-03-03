@@ -25,6 +25,7 @@ class Dominio(object):
 			
 		else:
 			self.ultimo.setSiguiente(nuevo)
+			nuevo.setAnterior(self.ultimo)
 			self.ultimo=nuevo
 
 		self.tamano=self.tamano+1

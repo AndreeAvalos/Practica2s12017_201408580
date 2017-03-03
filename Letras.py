@@ -32,6 +32,7 @@ class Letras(object):
 		nuevo=nl.NodoLetra(insertar)
 
 		self.ultimo.setAbajo(nuevo)
+		nuevo.setArriba(self.ultimo)
 		self.ultimo=nuevo
 
 	def buscar(self,valor):
