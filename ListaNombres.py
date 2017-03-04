@@ -85,3 +85,40 @@ class Nombres(object):
 
 	def setUltmio(self,ultimo):
 		return self.ultimo
+	def eliminar(self,dato):
+		if self.vacio()==False:
+			nodoaux = self.primero
+
+			while nodoaux!=None:
+				if nodoaux.getValor()==dato:
+					if nodoaux==self.primero:
+						if nodoaux.getSiguiente()!=None:
+							self.primero=nodoaux.getSiguiente()
+							nodoaux=None
+							self.tamano=self.tamano-1
+							
+						else:
+							self.setUltmio(None)
+							self.setPrimero(None)
+							self.tamano=0
+
+						break
+					elif nodoaux== self.getUltimo():
+						if nodoaux.getAnterior()!=None:
+						 	self.ultimo=nodoaux.getAnterior()
+						 	nodoaux=None
+						 	self.tamano=self.tamano -1 
+						else:
+							self.setPrimero(None)
+							self.setUltmio(None)
+							self.tamano=0
+							
+						break
+					else:
+						nodoaux.getAnterior().setSiguiente(nodoaux.getSiguiente())
+						nodoaux.getSiguiente().setAnterior(nodoaux.getAnterior())
+						self.tamano=self.tamano-1
+
+						break
+				else:
+					nodoaux=nodoaux.getSiguiente()

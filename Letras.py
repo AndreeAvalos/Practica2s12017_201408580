@@ -92,3 +92,40 @@ class Letras(object):
 
 	def setUltmio(self,ultimo):
 		return self.ultimo
+	def eliminar(self,dato):
+		if self.vacio()==False:
+			nodoaux = self.primero
+
+			while nodoaux!=None:
+				if nodoaux.getValor()==dato:
+					if nodoaux==self.primero:
+						if nodoaux.getAbajo()!=None:
+							self.primero=nodoaux.getAbajo()
+							nodoaux.getAbajo().setArriba(None)
+							self.tamano=self.tamano-1
+							
+						else:
+							self.primero=(None)
+							self.ultimo=(None)
+							self.tamano=0
+
+						break
+					elif nodoaux== self.getUltimo():
+						if nodoaux.getArriba()!=None:
+						 	self.ultimo=nodoaux.getArriba()
+						 	nodoaux.getArriba().setAbajo(None)
+						 	self.tamano=self.tamano -1 
+						else:
+							self.setPrimero(None)
+							self.setUltmio(None)
+							self.tamano=0
+							
+						break
+					else:
+						nodoaux.getArriba().setAbajo(nodoaux.getAbajo())
+						nodoaux.getAbajo().setArriba(nodoaux.getArriba())
+						self.tamano=self.tamano-1
+
+						break
+				else:
+					nodoaux=nodoaux.getAbajo()

@@ -84,3 +84,45 @@ class Dominio(object):
 
 	def setUltmio(self,ultimo):
 		return self.ultimo
+
+	def eliminar(self,dato):
+		if self.vacio()==False:
+			nodoaux = self.primero
+
+			while nodoaux!=None:
+
+				if nodoaux.getValor()==dato:
+
+					if nodoaux==self.primero:
+
+						if nodoaux.getSiguiente()!=None:
+							self.primero=nodoaux.getSiguiente()
+							nodoaux.getSiguiente().setAnterior(None)
+							self.tamano=self.tamano-1
+							
+						else:
+							self.ultimo=(None)
+							self.primero= (None)
+							self.tamano=0
+
+						break
+					elif nodoaux== self.getUltimo():
+
+						if nodoaux.getAnterior()!=None:
+						 	self.ultimo=nodoaux.getAnterior()
+						 	nodoaux.getAnterior().setSiguiente(None)
+						 	self.tamano=self.tamano -1 
+						else:
+							self.primero= (None)
+							self.ultimo=(None)
+							self.tamano=0
+							
+						break
+					else:
+						nodoaux.getAnterior().setSiguiente(nodoaux.getSiguiente())
+						nodoaux.getSiguiente().setAnterior(nodoaux.getAnterior())
+						self.tamano=self.tamano-1
+
+						break
+				else:
+					nodoaux=nodoaux.getSiguiente()

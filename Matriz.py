@@ -15,11 +15,12 @@ class Matriz(object):
 		self.listadominio = None
 		self.listanombres= None
 		self.tamano = 0
-
+	#Metodo para insertar
 	def insertar(self,letra,dominio,objeto):
 		if self.tamano ==0:
 			self.listaletra=Ls.Letras()
 			self.listadominio=DM.Dominio()
+
 			Listanombres=LN.Nombres()
 
 			Listanombres.insertar(objeto)
@@ -68,13 +69,17 @@ class Matriz(object):
 					nodoauxD= self.listadominio.buscar(dominio)
 					nodoaux = nodoauxD.getAbajo()
 
-					nodo=nm.NodoMatriz(objeto,letra,dominio)
+					Listanombres=LN.Nombres()
+
+					Listanombres.insertar(objeto)
+
+					nodo=nm.NodoMatriz(Listanombres,letra,dominio)
 					letrainsertar=letra[:1]
 					letrainsertar=ord(letrainsertar)
 
 					agregado = False
 					while nodoaux !=None:
-						print nodoaux.getLetra()
+
 						letracomparar= nodoaux.getLetra()[:1]
 						letracomparar=ord(letracomparar)
 						if letrainsertar>letracomparar:
@@ -242,30 +247,15 @@ class Matriz(object):
 				nodo.setArriba(auxDominio)
 				nodo.setAnterior(auxLista)
 				self.tamano=self.tamano+1
-
-	def imprimir(self):
-		derecha=self.listadominio.getPrimero()
-		actual=derecha
-		while derecha!= None:
-			print"\n====Dominio "+derecha.getValor()+"====\n"
-			abajo= self.listaletra.getPrimero()
-			while abajo!=None:
-				
-				actual=actual.getAbajo()
-				abajo=abajo.getAbajo()
-				print actual.getValor()
-
-			derecha=derecha.getSiguiente()
-			actual=derecha
-
+	#Metodo para construir el archivo txt y graficar en graphviz 
 	def ConstruirTXT(self):
 		#Creamos un archivo con nombre matriz
 		f=open("C:\graficas\Matriz.txt","w")
 		#Escribimos sobre el archivo el inicio de sentencia 
 		f.write("digraph Matriz{ \n")
-		f.write("\tnode [fontcolor=\"cyan\", height=0.5, color=\"black\"]\n")
-		f.write("\trankdir=LR \n")
-		f.write("\tedge  [color=\"black\", dir=fordware]\n")
+		f.write("node [fontcolor=\"cyan\", height=0.5, color=\"black\"]\n")
+		f.write("rankdir=LR \n")
+		f.write("edge  [color=\"black\", dir=fordware]\n")
 		#instanciamos derecha como primer nodo de la cabecera horizontal
 		derecha= self.listadominio.getPrimero()
 		Actual=derecha
@@ -471,7 +461,7 @@ class Matriz(object):
 
 		f.write("}")
 		subprocess.Popen("fdp -Tpng C:\graficas\Matriz.txt -o C:\graficas\Matriz.png")
-
+	#Metodo para obtener el valor en x en la matriz 
 	def posX(self,nodo):
 		x=1
 		derecha=self.listadominio.getPrimero()
@@ -482,7 +472,7 @@ class Matriz(object):
 			else:
 				x=x+1
 				derecha=derecha.getSiguiente()
-
+	#Metodo para obtener el valor en y en la matriz
 	def posY(self,nodo):
 
 		y=1
@@ -493,8 +483,7 @@ class Matriz(object):
 			else:
 				y=y+1
 				abajo=abajo.getAbajo()
-
-
+	#Metodo para comparar la letra y el dominio del nodo 
 	def Comparar(self, letra, dominio):
 		nodoAux = self.listadominio.buscar(dominio)
 		while nodoAux != None:
@@ -503,10 +492,7 @@ class Matriz(object):
 			else:
 				nodoAux = nodoAux.getAbajo()
 		return False
-	
-
-		
-
+	#Metodo para graficar los nombres de la lista del nodo digase el hijo 
 	def imprimirPrimeros(self,lista,f):
 		#Creamos un archivo con nombre matriz
 		f=f
@@ -521,8 +507,6 @@ class Matriz(object):
 				f.write("->"+auxiliar.getValor())
 				#print auxiliar.getValor()
 			f.write(";\n")
-
-			print lista.getUltimo().getValor()
 			f.write(lista.getUltimo().getValor()+"")
 
 			auxiliar= lista.getUltimo()
@@ -531,8 +515,77 @@ class Matriz(object):
 				f.write("->"+auxiliar.getValor())
 				#print auxiliar.getValor()
 			f.write(";\n")
-			
+	#Metodo para separarCorreo
+	def separarCorreo(self,email):
+		objeto=email.split("@")
+		nombre = objeto[0]
 
 
+		dominio=objeto[1]
+		letra=nombre[:1]
+		self.insertar(letra,dominio,nombre)
+	#Metodo para separar correo para eliminar
+	def separarCorreo2(self,email):
+		objeto=email.split("@")
+		nombre = objeto[0]
 
 
+		dominio=objeto[1]
+		letra=nombre[:1]
+		self.EliminarCorreo(letra,dominio,nombre)
+	#Metodo para eliminar el correo
+	def EliminarCorreo(self,letra,dominio,dato):
+		auxLetra=self.listaletra.buscar(letra)
+		auxDominio=self.listadominio.buscar(dominio)
+
+		if auxLetra!=None and auxDominio!=None:
+			aux = auxDominio
+
+			while aux != None:
+
+				if aux.getLetra()==letra:
+					lista = aux.getValor()
+					lista.eliminar(dato)
+
+					if lista.getPrimero()==None:
+
+						if self.Dominios()>2:
+							if aux.getAbajo() !=None:
+								aux.getArriba().setAbajo(aux.getAbajo())
+								aux.getAbajo().setArriba(aux.getArriba())
+							elif aux.getAbajo()==None:
+								aux.getArriba().setAbajo(None)
+						elif self.Dominios()==2:
+							self.listadominio.eliminar(dominio)
+
+						if self.Letras()>2:
+							if aux.getSiguiente() !=None:
+								aux.getAnterior().setSiguiente(aux.getSiguiente())
+								aux.getSiguiente().setAnterior(aux.getAnterior())
+							elif aux.getSiguiente()==None:
+								aux.getAnterior().setSiguiente(None)
+						elif self.Letras()==2:
+							self.listaletra.eliminar(letra)
+					return True
+				else:
+					aux=aux.getAbajo()
+			return False
+	#Metodo para recorrer la cabecera de dominios
+	def Dominios(self):
+		contador=0
+		nodoaux = self.listadominio.getPrimero()
+		while nodoaux!=None:
+			contador=contador+1
+			nodoaux = nodoaux.getAbajo()
+		return contador
+	#Metodo para recorrer la cabecera de letras
+	def Letras(self):
+		contador=0
+		nodoaux = self.listaletra.getPrimero()
+		while nodoaux!=None:
+			contador=contador+1
+			nodoaux = nodoaux.getSiguiente()
+		return contador
+
+
+	#Fin del programa 
