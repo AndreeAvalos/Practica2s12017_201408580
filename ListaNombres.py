@@ -61,7 +61,8 @@ class Nombres(object):
 
 		self.tamano=self.tamano+1
 		
-	
+	def getTamano(self):
+		return self.tamano
 
 	def buscar(self,valor):
 		if self.vacio()==False:

@@ -1,14 +1,21 @@
 import Matriz 
 ma= Matriz.Matriz()
-ma.insertar("a","1","amy")
-ma.insertar("a","1","andree")
-ma.insertar("a","1","arturo")
-ma.insertar("a","1","andrea")
+ma.insertar("r","hotmail.com","rodrigo")
+ma.insertar("r","hotmail.com","rosario")
+ma.insertar("r","hotmail.com","rosita")
+ma.insertar("c","mail.com","carlos")
+ma.insertar("a","mail.com","astrid")
+ma.insertar("a","mail.com","andree")
+ma.insertar("a","mail.com","andrea")
+ma.insertar("a","mail.com","ana")
 
 
 
 
 
 
-#ma.ConstruirTXT()
-ma.imprimirnombres()
+
+
+
+
+ma.ConstruirTXT()

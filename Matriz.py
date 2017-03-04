@@ -117,7 +117,7 @@ class Matriz(object):
 					if agregado ==False:
 						nodoaux2=nodoauxL.getSiguiente()
 						while nodoaux2.getSiguiente()!=None:
-							nodoaux2=nodoaux2.setSiguiente()
+							nodoaux2=nodoaux2.getSiguiente()
 
 						nodo.setAnterior(nodoaux2)
 						nodoaux2.setSiguiente(nodo)
@@ -132,7 +132,12 @@ class Matriz(object):
 				self.listadominio.insertar(dominio)
 
 				nodoauxL= self.listaletra.buscar(letra)
-				nodo=nm.NodoMatriz(objeto,letra,dominio)
+
+				Listanombres=LN.Nombres()
+
+				Listanombres.insertar(objeto)
+
+				nodo=nm.NodoMatriz(Listanombres,letra,dominio)
 				nodoaux2= nodoauxL.getSiguiente()
 
 				letrainsertar=dominio[:1]
@@ -156,7 +161,7 @@ class Matriz(object):
 				if agregado ==False:
 					nodoaux2=nodoauxL.getSiguiente()
 					while nodoaux2.getSiguiente()!=None:
-						nodoaux2=nodoaux2.setSiguiente()
+						nodoaux2=nodoaux2.getSiguiente()
 					nodo.setAnterior(nodoaux2)
 					nodoaux2.setSiguiente(nodo)
 
@@ -177,7 +182,11 @@ class Matriz(object):
 				nodoauxD=self.listadominio.buscar(dominio)
 				nodoaux=nodoauxD.getAbajo()
 
-				nodo=nm.NodoMatriz(objeto,letra,dominio)
+				Listanombres=LN.Nombres()
+
+				Listanombres.insertar(objeto)
+
+				nodo=nm.NodoMatriz(Listanombres,letra,dominio)
 
 				letrainsertar=letra[:1]
 				letrainsertar=ord(letrainsertar)
@@ -219,7 +228,11 @@ class Matriz(object):
 				auxLista=self.listaletra.buscar(letra)
 				auxDominio=self.listadominio.buscar(dominio)
 
-				nodo=nm.NodoMatriz(objeto,letra,dominio)
+				Listanombres=LN.Nombres()
+
+				Listanombres.insertar(objeto)
+
+				nodo=nm.NodoMatriz(Listanombres,letra,dominio)
 		
 
 
@@ -250,6 +263,9 @@ class Matriz(object):
 		f=open("C:\graficas\Matriz.txt","w")
 		#Escribimos sobre el archivo el inicio de sentencia 
 		f.write("digraph Matriz{ \n")
+		f.write("\tnode [fontcolor=\"cyan\", height=0.5, color=\"black\"]\n")
+		f.write("\trankdir=LR \n")
+		f.write("\tedge  [color=\"black\", dir=fordware]\n")
 		#instanciamos derecha como primer nodo de la cabecera horizontal
 		derecha= self.listadominio.getPrimero()
 		Actual=derecha
@@ -261,7 +277,7 @@ class Matriz(object):
 		#recorremos hacia la derecha enumerando
 		while derecha!=None:
 			#Escribimos los dominios con posicion y texto en el archivo
-			f.write(Actual.getValor()+"[style =\"filled\"; label="+Actual.getValor()+";pos= \""+str(contador)+",0!\"]\n")
+			f.write("\""+Actual.getValor()+"\""+"[style =\"filled\"; label=\""+Actual.getValor()+"\";pos= \""+str(contador)+",0!\"]\n")
 			contador=contador+1
 			#Obtenemos el siguiente nodo 
 			derecha=derecha.getSiguiente()
@@ -282,55 +298,46 @@ class Matriz(object):
 			Actual=abajo
 
 		'''--------------------------------Obtener Valores ----------------------------'''
-		#Instanciamos el derecha como primer valor 
+		#Creamos un archivo con nombre matriz
 		derecha=self.listadominio.getPrimero()
 		actual=derecha
 		#Instancia auxiliar para guardar posicion de letra
-		aux=self.listaletra.getPrimero()
-		contador=1
 		while derecha!= None:
 		#instanciamos abajo como primer valor para recorrer	
 			abajo= self.listaletra.getPrimero()
-
 			while abajo!=None:
 				#si el valor de abajo es diferente de nulo  agrega la linea 
-				if actual.getAbajo()!=None and aux!=None:
-
+				if actual.getAbajo()!=None:
 					actual=actual.getAbajo()
-
-					#print str(self.posX(derecha))+","+str(self.posY(aux))
-
 					#Escribimos el valor del nodo 
-					f.write(actual.getValor()+"[style =\"filled\"; label="+actual.getValor().getPrimero().getValor()+";pos= \""+str(self.posX(actual.getValor().getPrimero().getDominio()))+","+str(self.posY(actual.getValor().getPrimero().getLetra()))+"!\"]\n")
-					aux=aux.getAbajo()
-					contador=contador+1
+					f.write(actual.getValor().getPrimero().getValor()+"[style =\"filled\"; label="+actual.getValor().getPrimero().getValor()+";pos= \""+str(self.posX(actual.getDominio()))+","+str(self.posY(actual.getLetra()))+"!\"]\n")
+					self.imprimirPrimeros(actual.getValor(),f)
 				abajo=abajo.getAbajo()
 
 			derecha=derecha.getSiguiente()
-			aux=self.listaletra.getPrimero()
 			actual=derecha
 
 		'''--------------------------------Enlazar Cabeceras hacia derecha ----------------------------'''
 		derecha=self.listadominio.getPrimero()
 		abajo= self.listaletra.getPrimero()
-		f.write("\n inicial->"+derecha.getValor()+"->inicial->"+abajo.getValor()+"->inicial;\n")
+		f.write("\n inicial->"+"\""+derecha.getValor()+"\""+"->inicial->"+abajo.getValor()+"->inicial;\n")
 
 		first=True
 		Actual=derecha
 		while derecha!=None:
 
 			if first==True:
-				f.write(str(Actual.getValor()))
+				f.write(str("\""+Actual.getValor())+"\"")
 				first=False
 			else:
-				f.write("->"+Actual.getValor())
+				f.write("->"+"\""+Actual.getValor()+"\"")
 
 			contador=contador+1
 			derecha=derecha.getSiguiente()
 			Actual=derecha
 		f.write(";")
 
-		'''--------------------------------Enlazar Laterales hacia abajo----------------------------'''
+		'''--------------------------------Enlazar cabeceras hacia izquierda----------------------------'''
 		izquierda=self.listadominio.getUltimo()
 
 		last=True
@@ -339,17 +346,17 @@ class Matriz(object):
 		while izquierda!=None:
 			
 			if last==True:
-				f.write(str(Actual.getValor()))
+				f.write(str("\""+Actual.getValor())+"\"")
 				last=False
 				
 			else:
-				f.write("->"+Actual.getValor())
+				f.write("->"+"\""+Actual.getValor()+"\"")
 
 			izquierda=izquierda.getAnterior()
 			Actual=izquierda
 
 		f.write(";\n")
-		'''--------------------------------Enlazar Cabeceras hacia izquierda ----------------------------'''
+		'''--------------------------------Enlazar laterales hacia abajo ----------------------------'''
 		first=True
 		Actual=abajo
 		while abajo!=None:
@@ -362,7 +369,7 @@ class Matriz(object):
 			Actual=abajo
 		f.write(";\n")
 
-		'''--------------------------------Enlazar Cabeceras hacia arriba ----------------------------'''
+		'''--------------------------------Enlazar laterales hacia arriba ----------------------------'''
 
 		last=True
 		arriba = self.listaletra.getUltimo()
@@ -380,16 +387,16 @@ class Matriz(object):
 
 
 		'''--------------------------------Enlazar Valores hacia derecha----------------------------'''
+
 		#instanciamos para estar en la primera posicion de los dominios 
 		derecha=self.listadominio.getPrimero()
 		#nodo auxiliar el cual recorrera de derecha hacia abajo
 		actual=derecha
-
 		while derecha!= None:
 			#instanciamos el primero nodo de letras 
 			abajo= self.listaletra.getPrimero()
 			#escribimos en el archivo el primer valor
-			f.write(derecha.getValor())
+			f.write("\""+derecha.getValor()+"\"")
 
 			while abajo!=None:
 				#ponemos una condicion si actual diferente de nulo recorrera hacia abajo 
@@ -397,7 +404,7 @@ class Matriz(object):
 					#derecha, luego hacia abajo
 					actual=actual.getAbajo()
 					#enlazar el valor en el archivo del valor actual con el de abajo 
-					f.write("->"+actual.getValor())
+					f.write("->"+actual.getValor().getPrimero().getValor())
 				#cambiar de nodo hacia el siguiente 
 				abajo=abajo.getAbajo()
 			#separacion de nombres con ;
@@ -419,7 +426,7 @@ class Matriz(object):
 			while derecha!=None:
 				if actual.getSiguiente()!=None:
 					actual=actual.getSiguiente()
-					f.write("->"+actual.getValor())
+					f.write("->"+actual.getValor().getPrimero().getValor())
 				derecha=derecha.getSiguiente()
 			f.write(";\n")
 			abajo=abajo.getAbajo()
@@ -436,10 +443,10 @@ class Matriz(object):
 			while aux.getAbajo()!=None:
 				aux=aux.getAbajo()
 			while aux.getArriba()!=None:
-				f.write(aux.getValor()+"->")
+				f.write(aux.getValor().getPrimero().getValor()+"->")
 				aux=aux.getArriba()
 			
-			f.write( derecha.getValor())
+			f.write( "\""+derecha.getValor()+"\"")
 			f.write(";\n")
 			derecha=derecha.getSiguiente()
 			aux=derecha
@@ -453,10 +460,10 @@ class Matriz(object):
 			while aux.getSiguiente()!=None:
 				aux=aux.getSiguiente()
 			while aux.getAnterior()!=None:
-				f.write(aux.getValor()+"->")
+				f.write(aux.getValor().getPrimero().getValor()+"->")
 				aux=aux.getAnterior()
 			
-			f.write( abajo.getValor())
+			f.write(abajo.getValor())
 			f.write(";\n")
 			abajo=abajo.getAbajo()
 			aux=abajo
@@ -496,10 +503,36 @@ class Matriz(object):
 			else:
 				nodoAux = nodoAux.getAbajo()
 		return False
+	
 
-	def imprimirnombres(self):
-		abajo=self.listaletra.getPrimero().getSiguiente()
-		abajo=abajo.getValor().getPrimero()
-		while abajo!=None:
-			print abajo.getValor().getDominio()
-			abajo=abajo.getSiguiente()
+		
+
+	def imprimirPrimeros(self,lista,f):
+		#Creamos un archivo con nombre matriz
+		f=f
+
+		if lista.getTamano()>1:
+			f.write(lista.getPrimero().getValor()+"")
+
+			auxiliar= lista.getPrimero()
+			while auxiliar.getSiguiente()!=None :
+				auxiliar=auxiliar.getSiguiente()
+				aux=auxiliar
+				f.write("->"+auxiliar.getValor())
+				#print auxiliar.getValor()
+			f.write(";\n")
+
+			print lista.getUltimo().getValor()
+			f.write(lista.getUltimo().getValor()+"")
+
+			auxiliar= lista.getUltimo()
+			while auxiliar.getAnterior()!=None :
+				auxiliar=auxiliar.getAnterior()
+				f.write("->"+auxiliar.getValor())
+				#print auxiliar.getValor()
+			f.write(";\n")
+			
+
+
+
+
