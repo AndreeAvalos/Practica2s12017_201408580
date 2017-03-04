@@ -58,3 +58,4 @@ class NodoLetra(object):
 
 	def setDominio(self, valorAux):
 		self.dominio = valorAux
+		

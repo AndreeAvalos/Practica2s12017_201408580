@@ -3,7 +3,7 @@ nd=NodoDominio
 
 
 
-class Dominio(object):
+class Nombres(object):
 	def __init__(self):
 		self.primero=None
 		self.ultimo=None

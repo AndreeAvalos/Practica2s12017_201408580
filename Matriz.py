@@ -5,60 +5,68 @@ import Letras
 Ls=Letras
 import Dominios
 DM=Dominios
+import ListaNombres
+LN=ListaNombres
 import subprocess
 
 class Matriz(object):
 	def __init__(self):
 		self.listaletra=None
 		self.listadominio = None
+		self.listanombres= None
 		self.tamano = 0
 
 	def insertar(self,letra,dominio,objeto):
 		if self.tamano ==0:
 			self.listaletra=Ls.Letras()
 			self.listadominio=DM.Dominio()
-
 			nodo=nm.NodoMatriz(objeto,letra,dominio)
 
 			self.listadominio.insertar(dominio)
 			self.listaletra.insertar(letra)
 
-			auxLista=self.listaletra.buscar(letra)
+			auxLetra=self.listaletra.buscar(letra)
 			auxDominio=self.listadominio.buscar(dominio)
 
 			
 
-			auxLista.setSiguiente(nodo)
+			auxLetra.setSiguiente(nodo)
 			auxDominio.setAbajo(nodo)
 
 			nodo.setArriba(auxDominio)
-			nodo.setAnterior(auxLista)
+			nodo.setAnterior(auxLetra)
 
 			self.tamano=self.tamano+1
 
-		else:
+		elif self.tamano>0:
+
 			if self.listaletra.buscar(letra)!=None and self.listadominio.buscar(dominio)!=None:
 
 				if self.Comparar(letra,dominio)==True:
+
 					nodoauxD= self.listadominio.buscar(dominio)
 					nodoaux =nodoauxD
-					while nodoaux !=None:
+
+					while nodoaux!=None:
+
 						if nodoaux.getLetra()==letra:
 							nodoauxD=nodoaux
 							nodoaux=nodoaux.getAbajo()
 						else:
 							nodoaux=nodoaux.getAbajo()
-					nodoauxD.setValor(valor)
+
+					nodoauxD.setValor(objeto)
 				else:
 					nodoauxD= self.listadominio.buscar(dominio)
 					nodoaux = nodoauxD.getAbajo()
 
 					nodo=nm.NodoMatriz(objeto,letra,dominio)
-					letrainsertar=leta[:1]
+					letrainsertar=letra[:1]
 					letrainsertar=ord(letrainsertar)
 
 					agregado = False
 					while nodoaux !=None:
+						print nodoaux.getLetra()
 						letracomparar= nodoaux.getLetra()[:1]
 						letracomparar=ord(letracomparar)
 						if letrainsertar>letracomparar:
@@ -90,7 +98,7 @@ class Matriz(object):
 						letracomparar=ord(letracomparar)
 
 						if letrainsertar>letracomparar:
-							nodoaux2=nodiaux2.getSiguiente()
+							nodoaux2=nodoaux2.getSiguiente()
 						else:
 							nodo.setSiguiente(nodoaux2)
 							nodo.setAnterior(nodoaux2.getAnterior())
@@ -99,7 +107,7 @@ class Matriz(object):
 							agregado=True
 							break 
 					if agregado ==False:
-						nodoaux2=nodoauxl.getSiguiente()
+						nodoaux2=nodoauxL.getSiguiente()
 						while nodoaux2.getSiguiente()!=None:
 							nodoaux2=nodoaux2.setSiguiente()
 
@@ -115,41 +123,82 @@ class Matriz(object):
 
 				self.listadominio.insertar(dominio)
 
-				auxLista= self.listaletra.buscar(letra)
-
-				while auxLista.getSiguiente()!=None:
-					auxLista=auxLista.getSiguiente()
-				auxDominio=self.listadominio.buscar(dominio)
-
+				nodoauxL= self.listaletra.buscar(letra)
 				nodo=nm.NodoMatriz(objeto,letra,dominio)
+				nodoaux2= nodoauxL.getSiguiente()
 
-				auxLista.setSiguiente(nodo)
+				letrainsertar=dominio[:1]
+				letrainsertar=ord(letrainsertar)
+				agregado=False
+
+				while nodoaux2!=None:
+					letracomparar=nodoaux2.getDominio()[:1]
+					letracomparar=ord(letracomparar)
+
+					if letrainsertar>letracomparar:
+						nodoaux2=nodoaux2.getSiguiente()
+					else:
+						nodo.setSiguiente(nodoaux2)
+						nodo.setAnterior(nodoaux2.getAnterior())
+						nodoaux2.getAnterior().setSiguiente(nodo)
+						nodoaux2.setAnterior(nodo)
+						agregado=True
+						break 
+
+				if agregado ==False:
+					nodoaux2=nodoauxL.getSiguiente()
+					while nodoaux2.getSiguiente()!=None:
+						nodoaux2=nodoaux2.setSiguiente()
+					nodo.setAnterior(nodoaux2)
+					nodoaux2.setSiguiente(nodo)
+
+				auxDominio=self.listadominio.buscar(dominio)
+				
 				auxDominio.setAbajo(nodo)
 
 				nodo.setArriba(auxDominio)
-				nodo.setAnterior(auxLista)
 
 				self.tamano=self.tamano+1
+
 
 
 			elif self.listadominio.buscar(dominio)!=None and self.listaletra.buscar(letra)==None:
 
 				self.listaletra.insertar(letra)
 
-				auxLetra= self.listaletra.buscar(letra)
-
-				auxDominio=self.listadominio.buscar(dominio)
-
-				while auxDominio.getAbajo()!=None:
-					auxDominio=auxDominio.getAbajo()
-
+				nodoauxD=self.listadominio.buscar(dominio)
+				nodoaux=nodoauxD.getAbajo()
 
 				nodo=nm.NodoMatriz(objeto,letra,dominio)
 
-				auxLetra.setSiguiente(nodo)
-				auxDominio.setAbajo(nodo)
+				letrainsertar=letra[:1]
+				letrainsertar=ord(letrainsertar)
 
-				nodo.setArriba(auxDominio)
+				agregado = False
+				while nodoaux !=None:
+
+					letracomparar= nodoaux.getLetra()[:1]
+					letracomparar=ord(letracomparar)
+
+					if letrainsertar>letracomparar:
+						nodoaux=nodoaux.getAbajo()
+					else:
+						nodo.setAbajo(nodoaux)
+						nodo.setArriba(nodoaux.getArriba())
+						nodoaux.getArriba().setAbajo(nodo)
+						nodoaux.setArriba(nodo)
+						agregado=True
+						break
+				if agregado==False:
+					nodoaux= nodoauxD.getAbajo()
+					while nodoaux.getAbajo()!=None:
+						nodoaux=nodoaux.getAbajo()
+					nodo.setArriba(nodoaux)
+					nodoaux.setAbajo(nodo)
+
+				auxLetra=self.listaletra.buscar(letra)
+				auxLetra.setSiguiente(nodo)
+
 				nodo.setAnterior(auxLetra)
 
 				self.tamano=self.tamano+1
@@ -162,8 +211,9 @@ class Matriz(object):
 				auxLista=self.listaletra.buscar(letra)
 				auxDominio=self.listadominio.buscar(dominio)
 
+				nodo=nm.NodoMatriz(objeto,letra,dominio)
+		
 
-				nodo=nm.NodoMatriz(objeto)
 
 				auxLista.setSiguiente(nodo)
 				auxDominio.setAbajo(nodo)
@@ -197,7 +247,7 @@ class Matriz(object):
 		Actual=derecha
 		contador=1
 		#Agregamos el apuntador principal
-		f.write("i[style =\"filled\"; label=\"i\";pos= \"0,0!\"] \n")
+		f.write("inicial[style =\"filled\"; label=\"inicial\";pos= \"0,0!\"] \n")
 
 		'''--------------------------------Obtener Cabeceras ----------------------------'''
 		#recorremos hacia la derecha enumerando
@@ -229,29 +279,33 @@ class Matriz(object):
 		actual=derecha
 		#Instancia auxiliar para guardar posicion de letra
 		aux=self.listaletra.getPrimero()
+		contador=1
 		while derecha!= None:
 		#instanciamos abajo como primer valor para recorrer	
 			abajo= self.listaletra.getPrimero()
+
 			while abajo!=None:
 				#si el valor de abajo es diferente de nulo  agrega la linea 
-				if actual.getAbajo()!=None and aux!=None	:
+				if actual.getAbajo()!=None and aux!=None:
 
 					actual=actual.getAbajo()
 
 					#print str(self.posX(derecha))+","+str(self.posY(aux))
 
 					#Escribimos el valor del nodo 
-					f.write(actual.getValor()+"[style =\"filled\"; label="+actual.getValor()+";pos= \""+str(self.posX(derecha))+","+str(self.posY(aux))+"!\"]\n")
+					f.write(actual.getValor()+"[style =\"filled\"; label="+actual.getValor()+";pos= \""+str(self.posX(actual.getDominio()))+","+str(self.posY(actual.getLetra()))+"!\"]\n")
 					aux=aux.getAbajo()
-				
+					contador=contador+1
 				abajo=abajo.getAbajo()
+
 			derecha=derecha.getSiguiente()
+			aux=self.listaletra.getPrimero()
 			actual=derecha
 
 		'''--------------------------------Enlazar Cabeceras hacia derecha ----------------------------'''
 		derecha=self.listadominio.getPrimero()
 		abajo= self.listaletra.getPrimero()
-		f.write("\n i->"+derecha.getValor()+"->i->"+abajo.getValor()+"->i;\n")
+		f.write("\n inicial->"+derecha.getValor()+"->inicial->"+abajo.getValor()+"->inicial;\n")
 
 		first=True
 		Actual=derecha
@@ -408,17 +462,18 @@ class Matriz(object):
 		derecha=self.listadominio.getPrimero()
 
 		while derecha!=None:
-			if derecha==nodo:
+			if derecha.getValor()==nodo:
 				return x 
 			else:
 				x=x+1
 				derecha=derecha.getSiguiente()
 
 	def posY(self,nodo):
+
 		y=1
 		abajo= self.listaletra.getPrimero()
 		while abajo!=None:
-			if abajo==nodo:
+			if abajo.getValor()==nodo:
 				return y
 			else:
 				y=y+1
