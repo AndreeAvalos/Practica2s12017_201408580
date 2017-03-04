@@ -5,6 +5,11 @@
  */
 package Interfaz;
 
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.RequestBody;
+import javax.swing.JOptionPane;
+import static practica2.Practica2.getString;
+
 /**
  *
  * @author Andree
@@ -39,6 +44,11 @@ public class ListaSimple extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jButton1.setText("Agregar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Borrar");
 
@@ -111,6 +121,13 @@ public class ListaSimple extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        sendText(jTextField1.getText(), "agregar");
+        JOptionPane.showMessageDialog(null, "Se ha agregado el valor", "Lista Simple", JOptionPane.INFORMATION_MESSAGE);
+        jTextField1.setText("");        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -144,6 +161,15 @@ public class ListaSimple extends javax.swing.JFrame {
                 new ListaSimple().setVisible(true);
             }
         });
+    }
+    public static String sendText(String informacion, String tipo) {
+
+        RequestBody formBody = new FormEncodingBuilder()
+                .add("tipo", tipo)
+                .add("informacion", informacion)
+                .build();
+        String r = getString("listaSimple", formBody);
+        return r;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

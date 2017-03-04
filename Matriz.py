@@ -20,7 +20,11 @@ class Matriz(object):
 		if self.tamano ==0:
 			self.listaletra=Ls.Letras()
 			self.listadominio=DM.Dominio()
-			nodo=nm.NodoMatriz(objeto,letra,dominio)
+			Listanombres=LN.Nombres()
+
+			Listanombres.insertar(objeto)
+
+			nodo=nm.NodoMatriz(Listanombres,letra,dominio)
 
 			self.listadominio.insertar(dominio)
 			self.listaletra.insertar(letra)
@@ -55,7 +59,11 @@ class Matriz(object):
 						else:
 							nodoaux=nodoaux.getAbajo()
 
-					nodoauxD.setValor(objeto)
+					
+					listanombres=nodoauxD.getValor()
+					listanombres.insertar(objeto)
+
+
 				else:
 					nodoauxD= self.listadominio.buscar(dominio)
 					nodoaux = nodoauxD.getAbajo()
@@ -293,7 +301,7 @@ class Matriz(object):
 					#print str(self.posX(derecha))+","+str(self.posY(aux))
 
 					#Escribimos el valor del nodo 
-					f.write(actual.getValor()+"[style =\"filled\"; label="+actual.getValor()+";pos= \""+str(self.posX(actual.getDominio()))+","+str(self.posY(actual.getLetra()))+"!\"]\n")
+					f.write(actual.getValor()+"[style =\"filled\"; label="+actual.getValor().getPrimero().getValor()+";pos= \""+str(self.posX(actual.getValor().getPrimero().getDominio()))+","+str(self.posY(actual.getValor().getPrimero().getLetra()))+"!\"]\n")
 					aux=aux.getAbajo()
 					contador=contador+1
 				abajo=abajo.getAbajo()
@@ -488,3 +496,10 @@ class Matriz(object):
 			else:
 				nodoAux = nodoAux.getAbajo()
 		return False
+
+	def imprimirnombres(self):
+		abajo=self.listaletra.getPrimero().getSiguiente()
+		abajo=abajo.getValor().getPrimero()
+		while abajo!=None:
+			print abajo.getValor().getDominio()
+			abajo=abajo.getSiguiente()
