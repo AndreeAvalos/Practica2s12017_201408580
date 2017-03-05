@@ -13,7 +13,7 @@ ma.mandarCorreo("pablo@yahoo.com")
 
 
 ma.ConstruirTXT()
-ma.eliminar("andrea@gmail.com")
+ma.eliminar("pablo@yahoo.com")
 ma.ConstruirTXT()
 
 

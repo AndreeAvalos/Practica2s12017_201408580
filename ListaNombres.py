@@ -94,7 +94,7 @@ class Nombres(object):
 					if nodoaux==self.primero:
 						if nodoaux.getSiguiente()!=None:
 							self.primero=nodoaux.getSiguiente()
-							nodoaux=None
+							nodoaux=nodoaux.getSiguiente().setAnterior(None)
 							self.tamano=self.tamano-1
 							
 						else:
@@ -106,7 +106,7 @@ class Nombres(object):
 					elif nodoaux== self.getUltimo():
 						if nodoaux.getAnterior()!=None:
 						 	self.ultimo=nodoaux.getAnterior()
-						 	nodoaux=None
+						 	nodoaux=nodoaux.getAnterior().setSiguiente(None)
 						 	self.tamano=self.tamano -1 
 						else:
 							self.setPrimero(None)
