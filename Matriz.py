@@ -301,7 +301,7 @@ class Matriz(object):
 				if actual.getAbajo()!=None:
 					actual=actual.getAbajo()
 					#Escribimos el valor del nodo 
-					f.write(actual.getValor().getPrimero().getValor()+"[style =\"filled\"; label="+actual.getValor().getPrimero().getValor()+";pos= \""+str(self.posX(actual.getDominio()))+","+str(self.posY(actual.getLetra()))+"!\"]\n")
+					f.write(actual.getValor().getPrimero().getValor()+"[shape=doubleoctagon,style =\"filled\"; label="+actual.getValor().getPrimero().getValor()+";pos= \""+str(self.posX(actual.getDominio()))+","+str(self.posY(actual.getLetra()))+"!\"]\n")
 					self.imprimirPrimeros(actual.getValor(),f,actual.getLetra(),actual.getDominio())
 				abajo=abajo.getAbajo()
 
@@ -506,7 +506,7 @@ class Matriz(object):
 				cont2=cont2+0.05
 				auxiliar=auxiliar.getSiguiente()
 				aux=auxiliar
-				f.write("\""+auxiliar.getValor()+"\""+"[shape=box3d, style =\"filled\"; label=\""+auxiliar.getValor()+"\";pos= \""+str(cont2)+","+str(contador)+"!\"]\n")
+				f.write("\""+auxiliar.getValor()+"\""+"[shape=octagon, style =\"filled\"; label=\""+auxiliar.getValor()+"\";pos= \""+str(cont2)+","+str(contador)+"!\"]\n")
 				
 				#print auxiliar.getValor()
 			f.write(";\n")
@@ -541,10 +541,9 @@ class Matriz(object):
 	def eliminar(self,email):
 		objeto=email.split("@")
 		nombre = objeto[0]
-
-
 		dominio=objeto[1]
 		letra=nombre[:1]
+		print nombre+"-"+dominio+"-"+letra
 		self.EliminarCorreo(letra,dominio,nombre)
 	#Metodo para eliminar el correo
 	def EliminarCorreo(self,letra,dominio,dato):
@@ -554,56 +553,65 @@ class Matriz(object):
 		if auxLetra!=None and auxDominio!=None:
 			aux = auxDominio
 
-			while aux != None:
-
+			while aux!= None:
+				aux=aux.getAbajo()
+				print aux.getLetra()
 				if aux.getLetra()==letra:
 					lista = aux.getValor()
 					lista.eliminar(dato)
-
 					if lista.getPrimero()==None:
 
 						if self.Dominios()>2:
 							if aux.getAbajo() !=None:
 								aux.getArriba().setAbajo(aux.getAbajo())
 								aux.getAbajo().setArriba(aux.getArriba())
+
 							elif aux.getAbajo()==None:
 								aux.getArriba().setAbajo(None)
-						elif self.Dominios()==2:
+
+
+						else:
 							self.listadominio.eliminar(dominio)
 
 						if self.Letras()>2:
 							if aux.getSiguiente() !=None:
 								aux.getAnterior().setSiguiente(aux.getSiguiente())
 								aux.getSiguiente().setAnterior(aux.getAnterior())
+
 							elif aux.getSiguiente()==None:
 								aux.getAnterior().setSiguiente(None)
-						elif self.Letras()==2:
+
+						else:
+							
 							self.listaletra.eliminar(letra)
+
+
 					return True
-				else:
-					aux=aux.getAbajo()
+					
 			return False
 	#Metodo para recorrer la cabecera de dominios
 	def Dominios(self):
-		contador=0
+		contador=1
 		nodoaux = self.listadominio.getPrimero()
-		while nodoaux!=None:
-			contador=contador+1
+		while nodoaux.getAbajo()!=None:
+			
 			nodoaux = nodoaux.getAbajo()
+			contador=contador+1
 		return contador
 	#Metodo para recorrer la cabecera de letras
 	def Letras(self):
-		contador=0
+		contador=1
 		nodoaux = self.listaletra.getPrimero()
-		while nodoaux!=None:
-			contador=contador+1
+		while nodoaux.getSiguiente()!=None:
+			
 			nodoaux = nodoaux.getSiguiente()
+			contador=contador+1
 		return contador
 
 	def PorDominio(self,dominio):
 		derecha=listadominio.getPrimero()
-		while derecha.getSiguiente()!=None:
-			derecha.getSiguiente()
+		while derecha.getAbajo()!=None:
+			derecha.getAbajo()
 			
 
 

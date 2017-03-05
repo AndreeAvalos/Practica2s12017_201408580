@@ -98,8 +98,8 @@ class Nombres(object):
 							self.tamano=self.tamano-1
 							
 						else:
-							self.setUltmio(None)
-							self.setPrimero(None)
+							self.primero=(None)
+							self.ultimo=(None)
 							self.tamano=0
 
 						break
@@ -109,8 +109,8 @@ class Nombres(object):
 						 	nodoaux=nodoaux.getAnterior().setSiguiente(None)
 						 	self.tamano=self.tamano -1 
 						else:
-							self.setPrimero(None)
-							self.setUltmio(None)
+							self.primero=(None)
+							self.ultimo=(None)
 							self.tamano=0
 							
 						break

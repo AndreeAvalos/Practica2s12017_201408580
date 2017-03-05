@@ -4,17 +4,19 @@ ma= Matriz.Matriz()
 #ma.insertar("r","hotmail.com","rosario")
 #ma.insertar("r","hotmail.com","rosita")
 #ma.insertar("c","mail.com","carlos")
-ma.mandarCorreo("andree@gmail.com")
-ma.mandarCorreo("david@outlook.com")
-ma.mandarCorreo("elefante@outlook.com")
-ma.mandarCorreo("perro@yahoo.com")
-ma.mandarCorreo("pedro@yahoo.com")
-ma.mandarCorreo("pablo@yahoo.com")
+ma.mandarCorreo("ana@outlook.com")
 
+ma.mandarCorreo("beto@outlook.com")
+
+ma.eliminar("beto@outlook.com")
 
 ma.ConstruirTXT()
-ma.eliminar("pablo@yahoo.com")
-ma.ConstruirTXT()
+
+
+
+
+
+
 
 
 
