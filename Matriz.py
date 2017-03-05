@@ -252,8 +252,9 @@ class Matriz(object):
 		#Creamos un archivo con nombre matriz
 		f=open("C:\graficas\Matriz.txt","w")
 		#Escribimos sobre el archivo el inicio de sentencia 
-		f.write("digraph Matriz{ \n")
-		f.write("node [fontcolor=\"cyan\", height=0.5, color=\"black\"]\n")
+		f.write("digraph Matriz{ bgcolor=gray \n")
+		f.write("node [fontcolor=\"white\", height=0.5, color=\"white\"]\n")
+		f.write("[shape=tripleoctagon, style=filled, color=blue]")
 		f.write("rankdir=LR \n")
 		f.write("edge  [color=\"black\", dir=fordware]\n")
 		#instanciamos derecha como primer nodo de la cabecera horizontal
@@ -301,7 +302,7 @@ class Matriz(object):
 					actual=actual.getAbajo()
 					#Escribimos el valor del nodo 
 					f.write(actual.getValor().getPrimero().getValor()+"[style =\"filled\"; label="+actual.getValor().getPrimero().getValor()+";pos= \""+str(self.posX(actual.getDominio()))+","+str(self.posY(actual.getLetra()))+"!\"]\n")
-					self.imprimirPrimeros(actual.getValor(),f)
+					self.imprimirPrimeros(actual.getValor(),f,actual.getLetra(),actual.getDominio())
 				abajo=abajo.getAbajo()
 
 			derecha=derecha.getSiguiente()
@@ -493,23 +494,37 @@ class Matriz(object):
 				nodoAux = nodoAux.getAbajo()
 		return False
 	#Metodo para graficar los nombres de la lista del nodo digase el hijo 
-	def imprimirPrimeros(self,lista,f):
+	def imprimirPrimeros(self,lista,f,letra,dominio):
 		#Creamos un archivo con nombre matriz
 		f=f
-
+		cont2=self.posX(dominio)
+		contador=self.posY(letra)
 		if lista.getTamano()>1:
-			f.write(lista.getPrimero().getValor()+"")
+			auxiliar= lista.getPrimero()
+			while auxiliar.getSiguiente()!=None :
+				contador=contador+0.05
+				cont2=cont2+0.05
+				auxiliar=auxiliar.getSiguiente()
+				aux=auxiliar
+				f.write("\""+auxiliar.getValor()+"\""+"[shape=box3d, style =\"filled\"; label=\""+auxiliar.getValor()+"\";pos= \""+str(cont2)+","+str(contador)+"!\"]\n")
+				
+				#print auxiliar.getValor()
+			f.write(";\n")
+
+			auxiliar= lista.getUltimo()
 
 			auxiliar= lista.getPrimero()
+			f.write(auxiliar.getValor())
 			while auxiliar.getSiguiente()!=None :
 				auxiliar=auxiliar.getSiguiente()
 				aux=auxiliar
+
 				f.write("->"+auxiliar.getValor())
 				#print auxiliar.getValor()
 			f.write(";\n")
 			f.write(lista.getUltimo().getValor()+"")
-
 			auxiliar= lista.getUltimo()
+
 			while auxiliar.getAnterior()!=None :
 				auxiliar=auxiliar.getAnterior()
 				f.write("->"+auxiliar.getValor())
@@ -586,6 +601,12 @@ class Matriz(object):
 			contador=contador+1
 			nodoaux = nodoaux.getSiguiente()
 		return contador
+
+	def PorDominio(self,dominio):
+		derecha=listadominio.getPrimero()
+		while derecha.getSiguiente()!=None:
+			derecha.getSiguiente()
+			
 
 
 	#Fin del programa 
