@@ -5,6 +5,10 @@
  */
 package Interfaz;
 
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.RequestBody;
+import static practica2.Practica2.getString;
+
 /**
  *
  * @author Andree
@@ -35,8 +39,18 @@ public class Cola extends javax.swing.JFrame {
         setTitle("Cola");
 
         jButton1.setText("QueQue");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("DeQueQue");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -66,6 +80,28 @@ public class Cola extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    public static String sendText(String informacion, String tipo) {
+
+        RequestBody formBody = new FormEncodingBuilder()
+                .add("tipo", tipo)
+                .add("informacion", informacion)
+                .build();
+        String r = getString("Cola", formBody);
+        return r;
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        sendText(jTextField1.getText(), "insertar");
+        jTextField1.setText("");
+        
+       
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        System.out.println(sendText(jTextField1.getText(), "eliminar"));
+        jTextField1.setText("");
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

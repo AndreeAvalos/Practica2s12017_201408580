@@ -5,6 +5,11 @@
  */
 package Interfaz;
 
+import static Interfaz.Cola.sendText;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.RequestBody;
+import static practica2.Practica2.getString;
+
 /**
  *
  * @author Andree
@@ -36,8 +41,18 @@ public class Pila extends javax.swing.JFrame {
 
         jButton1.setText("Push");
         jButton1.setToolTipText("");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Pop");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -68,6 +83,27 @@ public class Pila extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        sendText(jTextField1.getText(), "push");
+        jTextField1.setText("");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        sendText(jTextField1.getText(), "pop");
+        jTextField1.setText("");
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    public static String sendText(String informacion, String tipo) {
+
+        RequestBody formBody = new FormEncodingBuilder()
+                .add("tipo", tipo)
+                .add("informacion", informacion)
+                .build();
+        String r = getString("Pila", formBody);
+        return r;
+    }
     /**
      * @param args the command line arguments
      */

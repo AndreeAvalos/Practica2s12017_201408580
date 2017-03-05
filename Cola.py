@@ -15,7 +15,7 @@ class Cola():
 		if self.raiz==None:
 			return True
 
-	def queue(self, Dato):
+	def queque(self, Dato):
 		Actual=Nodo.NodoCola(Dato)
 
 		if self.Vacia()==True:

@@ -51,8 +51,18 @@ public class ListaSimple extends javax.swing.JFrame {
         });
 
         jButton2.setText("Borrar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Buscar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -122,11 +132,22 @@ public class ListaSimple extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        sendText(jTextField1.getText(), "agregar");
-        JOptionPane.showMessageDialog(null, "Se ha agregado el valor", "Lista Simple", JOptionPane.INFORMATION_MESSAGE);
+        sendText(jTextField1.getText(), "insertar");
         jTextField1.setText("");        // TODO add your handling code here:
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        sendText(jTextField2.getText(), "eliminar");
+        jTextField2.setText("");
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        System.out.println(sendText(jTextField3.getText(),"buscar"));
+        jTextField3.setText("");
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,13 +183,14 @@ public class ListaSimple extends javax.swing.JFrame {
             }
         });
     }
+
     public static String sendText(String informacion, String tipo) {
 
         RequestBody formBody = new FormEncodingBuilder()
                 .add("tipo", tipo)
                 .add("informacion", informacion)
                 .build();
-        String r = getString("listaSimple", formBody);
+        String r = getString("ListaSimple", formBody);
         return r;
     }
 

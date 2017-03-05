@@ -629,12 +629,91 @@ class Matriz(object):
 				abajo=abajo.getAbajo()
 				actual=abajo
 		return contador
-
+	#Metodo para buscar Dominio
 	def PorDominio(self,dominio):
-		derecha=listadominio.getPrimero()
-		while derecha.getAbajo()!=None:
-			derecha.getAbajo()
-			
+		arreglo="Inicio "+dominio + "#"
+		derecha=self.listadominio.getPrimero()
+		actual=derecha
+		while derecha!= None:
+
+			print derecha.getValor()
+
+			if derecha.getValor()==dominio:
+
+				abajo= self.listaletra.getPrimero()
+
+				while abajo!=None and actual.getAbajo()!=None:
+
+					if actual!=None:
+
+						actual=actual.getAbajo()
+
+						if actual.getValor().getPrimero().getSiguiente()!=None:
+
+							auxiliar= actual.getValor().getPrimero()
+
+							while auxiliar!=None :
+								arreglo=arreglo+""+auxiliar.getValor()+"#"
+
+								auxiliar=auxiliar.getSiguiente()
+						else:		
+
+							arreglo=arreglo+""+actual.getValor().getPrimero().getValor()+"#"
+							
+					abajo=abajo.getAbajo()
+
+				break
+
+			else:
+
+				derecha=derecha.getSiguiente()
+
+				actual=derecha
+		arreglo=arreglo+"Fin "+dominio
+		return arreglo
+	#Metodo para buscar por Letra
+	def PorLetra(self,letra):
+		arreglo="Inicio "+letra +"#"
+
+		abajo=self.listaletra.getPrimero()
+		actual=abajo
+
+		while abajo!= None:
+
+			if abajo.getValor()==letra:
+
+				derecha= self.listaletra.getPrimero()
+
+				while derecha!=None and actual.getSiguiente()!=None:
+
+					if actual.getSiguiente()!=None :
+
+						
+						actual=actual.getSiguiente()
+
+						if actual.getValor().getPrimero().getSiguiente()!=None:
+
+							auxiliar= actual.getValor().getPrimero()
+
+							while auxiliar!=None :
+								arreglo=arreglo+""+auxiliar.getValor()+"#"
+
+								auxiliar=auxiliar.getSiguiente()
+						else:		
+
+							arreglo=arreglo+""+actual.getValor().getPrimero().getValor()+"#"
+
+					derecha=derecha.getSiguiente()
+
+				break
+
+			else:
+
+				abajo=abajo.getAbajo()
+
+				actual=abajo
+		arreglo=arreglo+"Fin "+letra
+		return arreglo
 
 
 	#Fin del programa 
