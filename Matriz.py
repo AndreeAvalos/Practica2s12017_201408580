@@ -511,8 +511,6 @@ class Matriz(object):
 				#print auxiliar.getValor()
 			f.write(";\n")
 
-			auxiliar= lista.getUltimo()
-
 			auxiliar= lista.getPrimero()
 			f.write(auxiliar.getValor())
 			while auxiliar.getSiguiente()!=None :
@@ -531,7 +529,7 @@ class Matriz(object):
 				#print auxiliar.getValor()
 			f.write(";\n")
 	#Metodo para separarCorreo
-	def separarCorreo(self,email):
+	def mandarCorreo(self,email):
 		objeto=email.split("@")
 		nombre = objeto[0]
 
@@ -540,7 +538,7 @@ class Matriz(object):
 		letra=nombre[:1]
 		self.insertar(letra,dominio,nombre)
 	#Metodo para separar correo para eliminar
-	def separarCorreo2(self,email):
+	def eliminar(self,email):
 		objeto=email.split("@")
 		nombre = objeto[0]
 
