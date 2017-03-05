@@ -93,13 +93,11 @@ class Letras(object):
 	def setUltmio(self,ultimo):
 		return self.ultimo
 	def eliminar(self,dato):
-		print dato
 		if self.vacio()==False:
 			nodoaux = self.primero
 
 			while nodoaux!=None:
 				if nodoaux.getValor()==dato:
-
 					if nodoaux==self.primero:
 						if nodoaux.getAbajo()!=None:
 							self.primero=nodoaux.getAbajo()

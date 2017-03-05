@@ -543,7 +543,7 @@ class Matriz(object):
 		nombre = objeto[0]
 		dominio=objeto[1]
 		letra=nombre[:1]
-		print nombre+"-"+dominio+"-"+letra
+
 		self.EliminarCorreo(letra,dominio,nombre)
 	#Metodo para eliminar el correo
 	def EliminarCorreo(self,letra,dominio,dato):
@@ -552,16 +552,16 @@ class Matriz(object):
 
 		if auxLetra!=None and auxDominio!=None:
 			aux = auxDominio
-
-			while aux!= None:
+			while aux.getAbajo()!= None:
 				aux=aux.getAbajo()
-				print aux.getLetra()
 				if aux.getLetra()==letra:
+
 					lista = aux.getValor()
 					lista.eliminar(dato)
+
 					if lista.getPrimero()==None:
 
-						if self.Dominios()>2:
+						if self.Dominios(dominio)!=1:
 							if aux.getAbajo() !=None:
 								aux.getArriba().setAbajo(aux.getAbajo())
 								aux.getAbajo().setArriba(aux.getArriba())
@@ -569,20 +569,19 @@ class Matriz(object):
 							elif aux.getAbajo()==None:
 								aux.getArriba().setAbajo(None)
 
+						else :
 
-						else:
 							self.listadominio.eliminar(dominio)
 
-						if self.Letras()>2:
+						if self.Letras(letra)!=1 :
 							if aux.getSiguiente() !=None:
 								aux.getAnterior().setSiguiente(aux.getSiguiente())
 								aux.getSiguiente().setAnterior(aux.getAnterior())
-
+							
 							elif aux.getSiguiente()==None:
 								aux.getAnterior().setSiguiente(None)
 
-						else:
-							
+						else :
 							self.listaletra.eliminar(letra)
 
 
@@ -590,22 +589,45 @@ class Matriz(object):
 					
 			return False
 	#Metodo para recorrer la cabecera de dominios
-	def Dominios(self):
-		contador=1
-		nodoaux = self.listadominio.getPrimero()
-		while nodoaux.getAbajo()!=None:
-			
-			nodoaux = nodoaux.getAbajo()
-			contador=contador+1
+	def Dominios(self,nodo):
+		contador=0
+		derecha=self.listadominio.getPrimero()
+		actual=derecha
+
+		while derecha!= None:
+			if derecha.getValor()==nodo:
+
+				abajo= self.listaletra.getPrimero()
+				while abajo!=None and actual.getAbajo()!=None:
+					if actual.getAbajo()!=None:
+						actual=actual.getAbajo()
+					contador=contador+1
+					abajo=abajo.getAbajo()
+				break
+			else:
+				derecha=derecha.getSiguiente()
+				actual=derecha
 		return contador
+
 	#Metodo para recorrer la cabecera de letras
-	def Letras(self):
-		contador=1
-		nodoaux = self.listaletra.getPrimero()
-		while nodoaux.getSiguiente()!=None:
-			
-			nodoaux = nodoaux.getSiguiente()
-			contador=contador+1
+	def Letras(self,nodo):
+		contador=0
+		abajo=self.listaletra.getPrimero()
+		actual=abajo
+
+		while abajo!= None:
+			if abajo.getValor()==nodo:
+				derecha= self.listaletra.getPrimero()
+				while derecha!=None and actual.getSiguiente()!=None:
+					if actual.getSiguiente()!=None :
+						actual=actual.getSiguiente()
+					contador=contador+1
+					derecha=derecha.getSiguiente()
+
+				break
+			else:
+				abajo=abajo.getAbajo()
+				actual=abajo
 		return contador
 
 	def PorDominio(self,dominio):
