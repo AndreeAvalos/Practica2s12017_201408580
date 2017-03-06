@@ -561,6 +561,7 @@ class Matriz(object):
 
 					if lista.getPrimero()==None:
 
+
 						if self.Dominios(dominio)!=1:
 							if aux.getAbajo() !=None:
 								aux.getArriba().setAbajo(aux.getAbajo())
@@ -572,7 +573,6 @@ class Matriz(object):
 						else :
 
 							self.listadominio.eliminar(dominio)
-
 						if self.Letras(letra)!=1 :
 							if aux.getSiguiente() !=None:
 								aux.getAnterior().setSiguiente(aux.getSiguiente())
@@ -623,7 +623,6 @@ class Matriz(object):
 						actual=actual.getSiguiente()
 					contador=contador+1
 					derecha=derecha.getSiguiente()
-
 				break
 			else:
 				abajo=abajo.getAbajo()

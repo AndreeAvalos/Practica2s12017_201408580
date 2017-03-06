@@ -13,23 +13,6 @@ pila=Pila.Pila()
 from flask import Flask, request, Response
 app = Flask("Practica2")
 
-#ma.insertar("r","hotmail.com","rodrigo")
-#ma.insertar("r","hotmail.com","rosario")
-#ma.insertar("r","hotmail.com","rosita")
-#ma.insertar("c","mail.com","carlos")
-#ma.mandarCorreo("ana@outlook.com")
-#ma.mandarCorreo("re@yahoo.com")
-#ma.mandarCorreo("beto@outlook.com")
-#ma.mandarCorreo("andre@outlook.com")
-#ma.mandarCorreo("rai@yahoo.com")
-#ma.mandarCorreo("bela@outlook.com")
-#ma.mandarCorreo("astrid@gmail.com")
-#ma.mandarCorreo("celeste@yahoo.com")
-#ma.mandarCorreo("armi@yahoo.com")
-
-
-#print ma.PorDominio("outlook.com")
-#print ma.PorLetra("a")
 
 
 @app.route('/ListaSimple', methods = ['POST']) 
